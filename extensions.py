@@ -26,7 +26,7 @@ class CurceConverter:
             raise ConvertionException(f'Не удалось обработать количество {amount}')
 
         r = requests.get(f'https://openexchangerates.org/api/latest.json?app_id=a90ee9d5a5d34b4ca52c36d9f0fdaa4b&base={quote_ticker}&symbols={base_ticker}')
-        total_base = (json.loads(r.content)[keys[base]])*float(amount)
+        total_base = json.loads(r.content)['rates'][base_ticker] * amount
 
         return total_base
 
