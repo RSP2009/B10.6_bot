@@ -25,8 +25,11 @@ class CurceConverter:
         except ValueError:
             raise ConvertionException(f'Не удалось обработать количество {amount}')
 
-        r = requests.get(f'https://openexchangerates.org/api/latest.json?app_id=a90ee9d5a5d34b4ca52c36d9f0fdaa4b&base={quote_ticker}&symbols={base_ticker}')
-        total_base = json.loads(r.content)['rates'][base_ticker] * amount
+
+
+        r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={quote_ticker}&tsyms={base_ticker}')
+        # total_base = json.loads(r.content)[base_ticker]['rates'] * amount
+        total_base = (json.loads(r.content)[keys[base]]) * float(amount)
 
         return total_base
 
